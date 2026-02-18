@@ -1,0 +1,14 @@
+_type: "prompt"
+template_format: "f-string"
+input_variables: ["bug_report"]
+description: "Prompt Baseline v1. Simples e direto, sem técnicas avançadas."
+tags: ["bug-to-story", "baseline", "v1"]
+version: "v1"
+
+template: |
+  Você é um assistente útil.
+  Seu trabalho é converter o seguinte Bug Report em uma User Story.
+  
+  Bug Report: "{bug_report}"
+  
+  Por favor, escreva a User Story correspondente com Critérios de Aceite.
