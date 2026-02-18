@@ -1,23 +1,23 @@
 # Relatório de Compliance — Desafio Prompt Engineering
 
-Comparação entre os requisitos de `docs/00.proposicao_problema.md` e o estado atual do workspace.
-Verificação realizada em **18/02/2026 às 11:50**.
+Comparação entre os requisitos dos critérios de entrega (novos) e o estado atual do workspace.  
+Verificação realizada em **18/02/2026 às 19:34**.
 
 ---
 
-## ✅ Resultado Geral: 35/35
+## ✅ Resultado Geral: 38/38
 
 | Seção | Itens | ✅ OK | ⚠️ Parcial | ❌ Ausente |
-|-------|-------|-------|-----------|-----------|
+|-------|-------|-------|-----------|-----------| 
 | Objetivo | 5 | 5 | 0 | 0 |
 | Stack Tecnológica | 5 | 5 | 0 | 0 |
 | Req. 1 — Pull | 3 | 3 | 0 | 0 |
-| Req. 2 — Otimização | 5 | 5 | 0 | 0 |
-| Req. 3 — Push e Avaliação | 2 | 2 | 0 | 0 |
+| Req. 2 — Otimização | 6 | 6 | 0 | 0 |
+| Req. 3 — Push e Avaliação | 3 | 3 | 0 | 0 |
 | Req. 4 — Testes | 6 | 6 | 0 | 0 |
-| Estrutura do Projeto | 6 | 6 | 0 | 0 |
+| Estrutura do Projeto | 7 | 7 | 0 | 0 |
 | Critérios de Entrega (README) | 3 | 3 | 0 | 0 |
-| **TOTAL** | **35** | **35** | **0** | **0** |
+| **TOTAL** | **38** | **38** | **0** | **0** |
 
 ---
 
@@ -27,11 +27,11 @@ Verificação realizada em **18/02/2026 às 11:50**.
 
 | Requisito | Status | Evidência |
 |-----------|--------|-----------|
-| Pull de prompts do LangSmith Hub | ✅ | `src/pull_prompts.py` → `prompts/raw_prompts.yml` |
+| Pull de prompts do LangSmith Hub | ✅ | `src/pull_prompts.py` |
 | Refatorar e otimizar prompts | ✅ | `prompts/bug_to_user_story_v2.yml` (4 técnicas) |
 | Push dos prompts otimizados | ✅ | `src/push_prompts.py` |
 | Avaliar qualidade com métricas | ✅ | `src/evaluate.py` + `src/metrics.py` |
-| Atingir ≥ 0.9 em todas as métricas | ✅ | Tone 1.00, AC 0.97, Format 0.99, Completeness 0.99 |
+| Atingir ≥ 0.9 em todas as métricas | ✅ | V2: Tone 0.97, AC 0.97, Format 0.99, Completeness 0.97 |
 
 ---
 
@@ -52,58 +52,60 @@ Verificação realizada em **18/02/2026 às 11:50**.
 | Requisito | Status | Evidência |
 |-----------|--------|-----------|
 | Configurar credenciais no `.env` | ✅ | `.env` + `.env.example` |
-| Alvo: `leonanluppi/bug_to_user_story_v1` | ✅ | `src/pull_prompts.py` linha 35 |
-| Saída: `prompts/raw_prompts.yml` | ✅ | Script configurado para salvar em `prompts/raw_prompts.yml` |
+| Alvo: `leonanluppi/bug_to_user_story_v1` | ✅ | `src/pull_prompts.py` |
+| Saída: `prompts/raw_prompts.yml` | ✅ | Arquivo gerado pelo script |
 
 ---
 
-### ✅ Requisito 2 — Otimização do Prompt (5/5)
+### ✅ Requisito 2 — Otimização do Prompt (6/6)
 
 | Requisito | Status | Evidência |
 |-----------|--------|-----------|
-| Arquivo `prompts/bug_to_user_story_v2.yml` | ✅ | Existe (3.6KB) |
-| Pelo menos 2 técnicas avançadas | ✅ | 4 técnicas: CoT, Few-Shot, XML Isolation, Role Prompting |
-| Instruções claras e regras explícitas | ✅ | Seções "INSTRUÇÕES DE PROCESSO" e "FORMATO DE SAÍDA OBRIGATÓRIO" |
-| Exemplos de entrada/saída (Few-shot) | ✅ | Seção "EXEMPLOS (Few-Shot)" com Bug Report + Saída completa |
-| Tratamento de edge cases | ✅ | "Cenário 2: Tratamento de Erro ou Caso de Borda" |
+| Arquivo `prompts/bug_to_user_story_v2.yml` | ✅ | Existe (4.2KB) |
+| Pelo menos 2 técnicas avançadas | ✅ | 4 técnicas: Role Prompting, CoT, Few-Shot, Output Structuring |
+| Campo `techniques` nos metadados YAML | ✅ | `techniques: ["role-prompting", "chain-of-thought", "few-shot-learning", "output-structuring"]` |
+| Instruções claras e regras explícitas | ✅ | Seção "REGRAS CRITICAS" com 8 regras explícitas |
+| Exemplos de entrada/saída (Few-shot) | ✅ | 1 exemplo completo (Bug → User Story com 3 cenários Gherkin + Contexto Técnico) |
+| Tratamento de edge cases | ✅ | Cenário 3 obrigatório: "caso de borda" |
 
 ---
 
-### ✅ Requisito 3 — Push e Avaliação (2/2)
+### ✅ Requisito 3 — Push e Avaliação (3/3)
 
 | Requisito | Status | Evidência |
 |-----------|--------|-----------|
-| `src/push_prompts.py` | ✅ | Existe (1.2KB) |
-| Métricas ≥ 0.9 (Tone, AC, Format, Completeness) | ✅ | Todas ≥ 0.97 |
+| `src/push_prompts.py` | ✅ | Existe |
+| Dataset com ≥ 15 exemplos originais preservados | ✅ | 15 exemplos do boilerplate + 19 extras = **34 total** |
+| Métricas ≥ 0.9 (Tone, AC, Format, Completeness) | ✅ | V2: 0.97 / 0.97 / 0.99 / 0.97 — todas ≥ 0.9 |
 
 ---
 
 ### ✅ Requisito 4 — Testes de Validação (6/6)
 
-| Critério | Status | Teste |
-|----------|--------|-------|
-| 1. Existência de System Prompt | ✅ | `TestSystemPrompt` (3 testes) |
-| 2. Definição de Persona (Role) | ✅ | `TestPersonaDefinition` (2 testes) |
-| 3. Exigência de formato (Markdown/User Story) | ✅ | `TestFormatRequirement` (4 testes) |
-| 4. Presença de Few-shot examples | ✅ | `TestFewShotExamples` (3 testes) |
-| 5. Ausência de termos `[TODO]` | ✅ | `TestNoTodoTerms` (3 testes) |
-| 6. Uso de ≥ 2 técnicas avançadas | ✅ | `TestAdvancedTechniques` (5 testes) |
+| Critério | Status | Teste (dentro de `class TestPrompts`) |
+|----------|--------|---------------------------------------|
+| 1. `test_prompt_has_system_prompt` | ✅ | Verifica instruções de sistema não vazias |
+| 2. `test_prompt_has_role_definition` | ✅ | Verifica persona "Product Owner" |
+| 3. `test_prompt_mentions_format` | ✅ | Verifica formato Como/Eu quero/Para que |
+| 4. `test_prompt_has_few_shot_examples` | ✅ | Verifica seção "Exemplo" + "Bug Report:" |
+| 5. `test_prompt_no_todos` | ✅ | Verifica ausência de [TODO], [FIXME], PLACEHOLDER |
+| 6. `test_minimum_techniques` | ✅ | Verifica campo `techniques` no YAML (≥ 2 itens) |
 
-**pytest: 24 passed, 0 failed (0.89s)**
+**pytest: 30 passed, 0 failed (1.21s)**
 
 ---
 
-### ✅ Estrutura do Projeto (6/6)
+### ✅ Estrutura do Projeto (7/7)
 
 | Arquivo/Diretório | Status |
 |--------------------|--------|
 | `prompts/bug_to_user_story_v1.yml` | ✅ |
-| `prompts/bug_to_user_story_v2.yml` | ✅ |
+| `prompts/bug_to_user_story_v2.yml` (com campo `techniques`) | ✅ |
 | `src/pull_prompts.py` | ✅ |
 | `src/push_prompts.py` | ✅ |
 | `src/evaluate.py` | ✅ |
 | `src/metrics.py` | ✅ |
-| `tests/test_prompts.py` | ✅ |
+| `tests/test_prompts.py` (class TestPrompts com 6 stubs) | ✅ |
 
 ---
 
@@ -111,12 +113,38 @@ Verificação realizada em **18/02/2026 às 11:50**.
 
 | Requisito | Status | Evidência |
 |-----------|--------|-----------|
-| Técnicas Aplicadas (justificativa) | ✅ | Seção "Técnicas de Prompt Engineering Aplicadas" com 4 técnicas justificadas |
-| Resultados Finais (link, screenshots, tabela) | ✅ | Tabela V1 vs V2 ✅, 3 links LangSmith ✅, 2 screenshots ✅ |
-| Instruções de Execução | ✅ | Seções 1-6 (Instalação → Testes) |
+| Técnicas Aplicadas (Fase 2) com justificativa | ✅ | Seção "🔬 Técnicas Aplicadas (Fase 2)" com 4 técnicas e impacto |
+| Resultados Finais (tabela, links, screenshots) | ✅ | Tabela V1 vs V2 ✅, links LangSmith ✅, screenshots ✅ |
+| Como Executar com exemplo prático | ✅ | Seção "🚀 Como Executar" com Bug Report → User Story de exemplo |
+
+---
+
+## 📐 Configuração de Avaliação
+
+| Aspecto | Detalhe |
+|---|---|
+| **Modelo Gerador** | `gemini-2.0-flash` (para V1 e V2) |
+| **Modelo Avaliador** | `gemini-2.5-flash` (LLM-as-Judge) |
+| **Dataset** | 34 exemplos (15 originais + 19 curados) |
+| **Métricas** | Tone, Acceptance Criteria, User Story Format, Completeness |
+| **Threshold** | ≥ 0.9 em todas as métricas oficiais |
 
 ---
 
 ## 🎯 Conclusão
 
-**Todos os 35 requisitos do desafio foram atendidos com sucesso.** O projeto está pronto para entrega.
+**Todos os 38 requisitos do desafio (critérios atualizados) foram atendidos com sucesso.**
+
+### Mudanças em relação à v1.0.0 (critérios originais)
+
+| Item | v1.0.0 | v1.2.0 |
+|---|---|---|
+| Dataset | 10 exemplos (custom) | 34 exemplos (15 originais + 19 curados) |
+| Testes | 24 testes (classes separadas) | 30 testes (`class TestPrompts` + extras) |
+| YAML metadata | `tags` apenas | `tags` + `techniques` |
+| Prompt V2 | XML Isolation + CoT | Role Prompting + Few-Shot rico + Output Structuring |
+| Gerador | gemini-2.5-flash | gemini-2.0-flash |
+| Avaliador | gemini-2.5-flash (mesmo) | gemini-2.5-flash (independente) |
+| V1 scores | Todos ≥ 0.9 | AC=0.88 ❌ (os demais ≥ 0.9) |
+| V2 scores | Todos ~0.93 | Todos ≥ 0.97 ✅ |
+| README | Seções básicas | Seções exigidas + exemplo prático |

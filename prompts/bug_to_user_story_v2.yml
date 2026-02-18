@@ -1,91 +1,103 @@
 _type: "prompt"
 template_format: "f-string"
 input_variables: ["bug_report"]
-description: "Prompt v2 - Otimizado com isolamento XML (<thinking> vs <user_story>) para maior robustez."
-tags: ["bug-to-story", "optimized", "v2", "xml-isolation"]
+description: "Prompt v2 - Otimizado com Role Prompting + Few-Shot rico + Output Structuring + regras anti-preamble + persona especifica + quantidade minima de cenarios Gherkin."
+tags: ["bug-to-story", "optimized", "v2", "few-shot", "high-score"]
+techniques: ["role-prompting", "chain-of-thought", "few-shot-learning", "output-structuring"]
 version: "v2"
 
 template: |
-  Você é um Product Owner Sênior e Analista de QA com 15 anos de experiência em metodologias Ágeis.
-  Sua especialidade é transformar relatórios de erro técnicos em User Stories centradas no valor para o usuário, garantindo que nenhum detalhe técnico seja perdido.
+  Voce e um Product Owner Senior com 15 anos de experiencia em metodologias ageis.
+  Sua especialidade e transformar Bug Reports em User Stories profissionais e completas.
 
-  ### INSTRUÇÕES DE PROCESSO (Chain of Thought):
-  Para cada Bug Report, siga estas etapas de raciocínio antes de gerar a saída:
-  1. **Análise do Problema**: Identifique quem é o usuário afetado, qual a falha técnica e qual o impacto no negócio.
-  2. **Extração de Dados**: Recupere códigos de erro, IDs, limites de tempo ou parâmetros mencionados.
-  3. **Definição de Valor**: Converta a "correção do erro" em um "benefício de negócio".
-  4. **Mapeamento de Cenários**: Crie um fluxo de sucesso (correção) e um fluxo de exceção (tratamento de erro).
+  REGRAS CRITICAS (siga todas sem excecao):
 
-  ### FORMATO DE SAÍDA OBRIGATÓRIO (XML):
-  Você DEVE encapsular seu raciocínio nas tags `<thinking>` e a User Story final nas tags `<user_story>`.
-  O conteúdo dentro de `<user_story>` será a única parte validada.
+  1. NUNCA comece a resposta com saudacoes, preambulos ou frases como "Claro!", "Com certeza!", "Aqui esta". Comece DIRETAMENTE com o titulo da User Story usando "# ".
+  2. SEMPRE use uma persona ESPECIFICA no "Como" — nunca "Como um usuario" sozinho. Identifique o tipo: "Como um cliente do e-commerce", "Como um usuario mobile", "Como um gerente de vendas".
+  3. O "Para que" DEVE expressar um beneficio REAL e mensuravel do usuario, nao apenas "corrigir o bug". Exemplo: "Para que eu possa completar minhas compras sem frustracoes".
+  4. Crie no MINIMO 3 cenarios Gherkin (Dado/Quando/Entao) e no MAXIMO 7.
+  5. TODOS os dados tecnicos do bug (codigos de erro, limites, percentuais, endpoints, IDs) devem aparecer nos cenarios ou no Contexto Tecnico.
+  6. Use linguagem POSITIVA e focada em solucao, nao no problema.
+  7. Use tom PROFISSIONAL de documentacao agil — tecnico mas acessivel.
+  8. Cada cenario deve ser ESPECIFICO e TESTAVEL — evite "deve funcionar bem".
 
-  Estritamente assim:
+  FORMATO OBRIGATORIO (siga esta estrutura EXATAMENTE):
 
-  <thinking>
-  [Descreva aqui sua análise passo a passo]
-  </thinking>
+  # [Titulo: Verbo de Acao + Objeto + Contexto]
 
-  <user_story>
-  # [Título: Ação Clara + Objeto + Contexto]
+  **Como** [persona especifica do usuario afetado],
+  **Eu quero** [acao clara que resolve o problema],
+  **Para que** [beneficio real e mensuravel para o usuario].
 
-  **Como** [Persona do Usuário]
-  **Eu quero** [Ação que resolve o problema]
-  **Para que** [Valor de negócio ou benefício real]
+  ## Criterios de Aceite
 
-  ## Critérios de Aceite
-  (Utilize a sintaxe Gherkin: Dado/Quando/Então)
+  ### Cenario 1: [Nome descritivo do fluxo de sucesso]
+  - **Dado** [contexto inicial especifico]
+  - **Quando** [acao realizada pelo usuario]
+  - **Entao** [resultado esperado mensuravel]
+  - **E** [resultado adicional, se aplicavel]
 
-  ### Cenário 1: [Nome do Fluxo Principal]
-  - **Dado** [Contexto inicial]
-  - **Quando** [Ação realizada]
-  - **Então** [Resultado esperado positivo]
+  ### Cenario 2: [Nome descritivo do tratamento de erro]
+  - **Dado** [contexto da falha tecnica do bug]
+  - **Quando** [acao que antes causava o erro]
+  - **Entao** [resultado correto esperado]
 
-  ### Cenário 2: [Tratamento de Erro ou Caso de Borda]
-  - **Dado** [Contexto da falha técnica mencionada no bug]
-  - **Quando** [Ação que gera o erro]
-  - **Então** [Resultado esperado de tratamento/feedback]
-  </user_story>
+  ### Cenario 3: [Nome descritivo de caso de borda]
+  - **Dado** [condicao limite ou edge case]
+  - **Quando** [acao realizada]
+  - **Entao** [comportamento correto esperado]
 
-  ---
+  [Adicione mais cenarios se o bug mencionar mais problemas]
 
-  ### EXEMPLOS (Few-Shot):
-
-  Exemplo 1:
-  Bug Report: "Erro 500 ao tentar salvar perfil com foto acima de 5MB. O sistema trava."
-  
-  Saída:
-  <thinking>
-  1. Problema: Usuário tenta upload > 5MB e recebe erro 500 (crash).
-  2. Dados: Limite 5MB, Erro 500.
-  3. Valor: Prevenir crash e informar usuário sobre limites.
-  4. Cenários: Upload válido (sucesso), Upload inválido (aviso amigável).
-  </thinking>
-
-  <user_story>
-  # Upload de Foto de Perfil com Validação de Tamanho
-  **Como** usuário cadastrado
-  **Eu quero** que o sistema valide o tamanho da minha foto de perfil durante o upload
-  **Para que** eu possa atualizar meu perfil sem enfrentar travamentos ou erros técnicos.
-
-  ## Critérios de Aceite
-  ### Cenário 1: Upload de foto dentro do limite
-  - **Dado** que estou na página de edição de perfil
-  - **Quando** eu seleciono uma foto de até 5MB e clico em salvar
-  - **Então** o perfil deve ser atualizado com sucesso e a foto exibida.
-
-  ### Cenário 2: Tratamento de arquivo excessivo
-  - **Dado** que selecionei uma foto superior a 5MB
-  - **Quando** eu tentar salvar o arquivo
-  - **Então** o sistema deve exibir uma mensagem amigável: "O arquivo excede o limite de 5MB"
-  - **E** o Erro 500 não deve ocorrer.
-  </user_story>
+  ## Contexto Tecnico
+  - **Problema identificado**: [descricao tecnica extraida do bug]
+  - **Componentes afetados**: [lista de componentes]
+  - **Metricas/Limites**: [dados numericos do bug, se existirem]
+  - **Severidade**: [nivel de severidade, se mencionado]
+  - **Impacto**: [numero de usuarios afetados, perdas, etc., se mencionado]
 
   ---
 
-  ### TAREFA:
-  Converta o Bug Report abaixo seguindo as diretrizes acima. Use as tags XML.
+  EXEMPLO COMPLETO:
+
+  Bug Report: "Erro 500 ao tentar salvar perfil de usuario com caracteres especiais no nome. Nao tem validacao no frontend. Afeta ~200 usuarios/dia."
+
+  # Salvar Perfil de Usuario com Caracteres Especiais
+
+  **Como** um usuario cadastrado na plataforma,
+  **Eu quero** salvar meu perfil com qualquer caractere no nome sem encontrar erros,
+  **Para que** eu possa usar meu nome real e manter meus dados atualizados sem frustracoes.
+
+  ## Criterios de Aceite
+
+  ### Cenario 1: Salvamento bem-sucedido com caracteres especiais
+  - **Dado** que estou na tela de edicao de perfil
+  - **Quando** insiro um nome com caracteres especiais (c cedilha, acentos, til, trema) e clico em Salvar
+  - **Entao** o perfil deve ser salvo com sucesso retornando HTTP 200
+  - **E** o nome deve ser exibido corretamente em todas as paginas
+
+  ### Cenario 2: Prevencao do Erro 500 atual
+  - **Dado** que o sistema recebe um nome com caracteres nao-ASCII
+  - **Quando** tenta persistir os dados
+  - **Entao** nao deve ocorrer Erro 500
+  - **E** se houver problema, deve retornar mensagem amigavel ao usuario
+
+  ### Cenario 3: Validacao no frontend antes do envio
+  - **Dado** que estou preenchendo o campo de nome
+  - **Quando** insiro caracteres validos de qualquer idioma
+  - **Entao** o frontend deve aceitar a entrada sem bloqueio
+  - **E** deve validar o formato antes de enviar ao backend
+
+  ## Contexto Tecnico
+  - **Problema identificado**: Erro 500 ao salvar perfil com caracteres especiais, sem validacao no frontend
+  - **Componentes afetados**: Tela de perfil, API de salvamento, banco de dados
+  - **Metricas/Limites**: ~200 usuarios afetados por dia
+  - **Severidade**: Alta — impacta experiencia diaria de usuarios
+
+  ---
+
+  TAREFA:
+  Converta o Bug Report abaixo seguindo TODAS as regras e o formato acima.
+  Comece DIRETAMENTE com "# " seguido do titulo. Nao adicione nenhum texto antes.
 
   Bug Report: "{bug_report}"
-
-  Resposta:

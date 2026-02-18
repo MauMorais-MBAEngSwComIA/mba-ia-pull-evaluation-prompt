@@ -1,7 +1,7 @@
 # Relatório de Testes — Prompt Validation
 
-**Data**: 18/02/2026 11:53:45
-**Duração**: 0.91s
+**Data**: 18/02/2026 20:31:44
+**Duração**: 1.29s
 **Status**: ✅ APROVADO
 
 ---
@@ -10,11 +10,22 @@
 
 | Total | ✅ Passed | ❌ Failed | ⏭️ Skipped |
 |-------|----------|----------|-----------|
-| 24 | 24 | 0 | 0 |
+| 30 | 30 | 0 | 0 |
 
 ---
 
 ## Resultados por Critério
+
+### ✅ Critério ?: TestPrompts
+
+| Teste | Status | Tempo |
+|-------|--------|-------|
+| Prompt Has System Prompt | ✅ Pass | 0.000s |
+| Prompt Has Role Definition | ✅ Pass | 0.000s |
+| Prompt Mentions Format | ✅ Pass | 0.000s |
+| Prompt Has Few Shot Examples | ✅ Pass | 0.000s |
+| Prompt No Todos | ✅ Pass | 0.000s |
+| Minimum Techniques | ✅ Pass | 0.000s |
 
 ### ✅ Critério 0: Carregamento do Prompt
 
@@ -71,9 +82,9 @@
 |-------|--------|-------|
 | Uses Chain Of Thought | ✅ Pass | 0.000s |
 | Uses Few Shot | ✅ Pass | 0.000s |
-| Uses Xml Isolation | ✅ Pass | 0.000s |
+| Uses Output Structuring | ✅ Pass | 0.000s |
 | Uses Persona | ✅ Pass | 0.000s |
 | Minimum Two Techniques | ✅ Pass | 0.000s |
 
 ---
-*Gerado automaticamente por `pytest` em 18/02/2026 11:53:45.*
+*Gerado automaticamente por `pytest` em 18/02/2026 20:31:44.*
